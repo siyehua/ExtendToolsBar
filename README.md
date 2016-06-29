@@ -6,4 +6,4 @@ Head + ViewPager
 让ViewPager和头部一起滚动.
 
 
-[Image](/xiaoguo.gif)
+![效果图](/xiaoguo.gif)
