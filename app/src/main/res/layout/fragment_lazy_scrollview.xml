@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DataLazyScrollViewFragment">
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="界面正加载..."/>
+
+    <ImageView
+        android:id="@+id/_001"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_content"
+        android:scaleType="fitXY"
+        android:src="@drawable/_001"/>
+
+    <ImageView
+        android:id="@+id/_002"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/_001"
+        android:scaleType="fitXY"
+        android:src="@drawable/_002"/>
+
+    <ImageView
+        android:id="@+id/_003"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/_002"
+        android:scaleType="fitXY"
+        android:src="@drawable/_003"/>
+</RelativeLayout>
