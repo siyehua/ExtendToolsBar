@@ -1,9 +1,11 @@
 # ExtendToolsBar
 Head + ViewPager 联动滑动框架
 
-现在有很多应用有 头部 + ViewPager 这样的滑动框架,例如bilibili的首页,应用宝的应用详情,以及一些应用的个人中心等等.
+##项目主要搭建了联动滑动框架,以及解答使用框架遇到的问题
 
-![bilibili](/img/bilibili.png)
+现在有很多应用的设计,都有 头部 + ViewPager 这样的滑动框架,例如bilibili的首页,应用宝的应用详情,以及一些应用的个人中心等等.
+
+![bilibili](/img/bilibili_new.png)
 
 ##图为bilibili的首页
 
@@ -162,7 +164,7 @@ protected boolean onActivityCreatedFlag = false;
      微信就是采用了懒加载布局的方式实现的,设置了懒加载,哪怕viewpager初始化时设置了setOffscreenPageLimit(10),也不会卡顿
  
 下面是关键代码(点击查看[详细代码](/app/src/main/java/com/siyehua/extendtoolsbar/BaseFragment.java))
-(LazyScrollViewFragment)(/app/src/main/java/com/siyehua/extendtoolsbar/LazyScrollViewFragment.java)
+[LazyScrollViewFragment](/app/src/main/java/com/siyehua/extendtoolsbar/LazyScrollViewFragment.java)
 就是采用懒加载的方式,大大提高了应用初始化的速度.
 
 ```java
