@@ -16,9 +16,9 @@ Head + ViewPager 联动滑动框架
 
 典型的实现就是CoordinatorLayout,本框架就是基于CoordinatorLayout搭建的.
 
-ViewPager的碎片支持RecycleView,NestedScrollView,以及任何实现了NestedScrollingParent,NestedScrollingChild的View.
+ViewPager碎片的根布局支持RecycleView,NestedScrollView,以及任何实现了NestedScrollingParent,NestedScrollingChild的View.
 
-关于NestedScrolling请[点击](http://www.open-open.com/lib/view/open1440332151780.html)
+关于NestedScrolling相关资料请[点击](http://www.open-open.com/lib/view/open1440332151780.html)
 
 ##效果图
 ![效果图](/img/xiaoguo.gif)
@@ -27,8 +27,8 @@ ViewPager的碎片支持RecycleView,NestedScrollView,以及任何实现了Nested
 ##实际问题
 ###问题1: ActionBar左边有一点点间距
 
-一般应用的头部都没有采用android自带的ActionBar/ToolsBar.
-自定义时发现距离左边始终会有一点间距
+一般应用的头部设计都没有采用android自带的ActionBar/ToolsBar.
+自定义title时会发现title距离左边始终有一点间距
 
 解决方案:自定义主题
 ```xml
@@ -42,8 +42,8 @@ ViewPager的碎片支持RecycleView,NestedScrollView,以及任何实现了Nested
     </style>
 
     <style name="ClubToolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="contentInsetStart">0dp</item>
         <!-- 设置该属性解决空白部分-->
+        <item name="contentInsetStart">0dp</item>
     </style>
 ```
 
@@ -68,7 +68,7 @@ ViewPager的碎片支持RecycleView,NestedScrollView,以及任何实现了Nested
 监听AppBarLayout的滑动距离
 
 ```java
-//监听顶部的滑动具体
+//监听顶部的滑动距离
         final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         if (appBarLayout != null) {
             appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -84,11 +84,11 @@ ViewPager的碎片支持RecycleView,NestedScrollView,以及任何实现了Nested
 
 ###问题3: ViewPager中的Fragment根布局不是RecycleView,NestedScrollView.
 
-解决方案:只要支持与CoordinatorLayout联动即可.具体可以看NestedScrollView中关于对NestedScrollingParent,NestedScrollingChild的实现
+解决方案:只要支持与CoordinatorLayout联动即可.具体可以看NestedScrollView源码中关于对NestedScrollingParent,NestedScrollingChild的实现
 
 ###问题4: 应用本身设置了其他的主题,与该框架主题冲突
 
-解决方案:单独设置该Activity的主题
+解决方案:单独设置Activity的主题
 
 ###问题5: 初始化的数据莫名其妙不显示,或类似的问题
 
@@ -134,7 +134,7 @@ protected boolean onActivityCreatedFlag = false;
 
 ###问题6: 当有多个碎片时,非碎片间的切换非常卡
 
-问题分析:以bilibili为例,假设从"直播"碎片切换到"发现"碎片的时候卡顿(实际体验并不卡,好吧就我做的应用卡),是因为
+问题分析:以bilibili为例,假设从"直播"碎片切换到"发现"碎片的时候卡顿(实际体验并不卡,好吧我做的应用卡),是因为
 
 * 碎片设计过于复杂,可去掉默认动画.从 直播 到 发现 界面,默认动画会依次滑过这两个碎片中间所有碎片的布局,大量的初始化造成卡顿.
 设置下面方法,设置一个简单动画避免该问题
@@ -145,9 +145,9 @@ protected boolean onActivityCreatedFlag = false;
 
 * 前面说了,viewPager默认设置setOffscreenPageLimit(1),也就是只预加载相邻的一个碎片的数据,而从直播切换到发现,发现还没有被初始化
 
-假设发现的布局非常复杂,则会产生卡顿现象,同样的,当切换到发现后,此处的直播碎片已经被销毁,再切换会直播碎片,其view需要重新渲染,也会导致卡顿问题.
+    假设发现的布局非常复杂,则会产生卡顿现象,同样的,当切换到发现后,此处的直播碎片已经被销毁,再切换会直播碎片,其view需要重新渲染,也会导致卡顿问题.
 
-可以根据需要,设置setOffscreenPageLimit()的参数大小来保留碎片,保证其不会被销毁,但会增加应用占用的内存,所以要合理的设置setOffscreenPageLimit()
+    可以根据需要,设置setOffscreenPageLimit()的参数大小来保留碎片,保证其不会被销毁,但会增加应用占用的内存,所以要合理的使用setOffscreenPageLimit()
 
 ###问题7: 有非常多碎片,或碎片布局非常复杂时,首次渲染非常慢
 
@@ -164,6 +164,7 @@ protected boolean onActivityCreatedFlag = false;
      微信就是采用了懒加载布局的方式实现的,设置了懒加载,哪怕viewpager初始化时设置了setOffscreenPageLimit(10),也不会卡顿
  
 下面是关键代码(点击查看[详细代码](/app/src/main/java/com/siyehua/extendtoolsbar/BaseFragment.java))
+
 [LazyScrollViewFragment](/app/src/main/java/com/siyehua/extendtoolsbar/LazyScrollViewFragment.java)
 就是采用懒加载的方式,大大提高了应用初始化的速度.
 

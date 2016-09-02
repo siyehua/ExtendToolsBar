@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }
         setSupportActionBar(toolbar);
 
-        //监听顶部的滑动具体
+        //监听顶部的滑动距离
         final AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.appbar);
         if (appBarLayout != null) {
             appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
