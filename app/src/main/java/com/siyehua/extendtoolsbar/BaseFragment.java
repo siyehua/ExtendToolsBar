@@ -21,11 +21,11 @@ public abstract class BaseFragment extends Fragment {
     protected boolean getDataFlag = false;
     protected boolean onActivityCreatedFlag = false;
 
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         onActivityCreatedFlag = true;
-        initViewFlag = false;
         if (getUserVisibleHint()) {
             findView();
             init();
@@ -33,6 +33,7 @@ public abstract class BaseFragment extends Fragment {
             getData();
         }
     }
+
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -43,6 +44,13 @@ public abstract class BaseFragment extends Fragment {
             initViewFlag = true;
             getData();
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        initViewFlag = false;
+        onActivityCreatedFlag = false;
     }
 
     protected View findViewById(int id) {

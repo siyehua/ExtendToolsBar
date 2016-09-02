@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         //set viewPager data
         mViewPager = (ViewPager) findViewById(R.id.vp_main);
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(LazyScrollViewFragment.newInstance());
+//        fragments.add(LazyScrollViewFragment.newInstance());
         fragments.add(RecycleFragment.newInstance("1", "1-1"));
         fragments.add(LazyScrollViewFragment.newInstance());
         fragments.add(RecycleFragment.newInstance("1", "1-1"));
@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter
                 (getSupportFragmentManager(), fragments);
         mViewPager.setAdapter(mainViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(1);
     }
 
 }
