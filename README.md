@@ -98,7 +98,7 @@ ViewPager碎片的根布局支持RecycleView,NestedScrollView,以及任何实现
 解决方案:onCreateView是为了创建界面用的,为了设置布局,初始化最好是在onActivityCreated中完成,才能保证不至于莫名其妙丢失数据等问题.
 
 
-###问题5: 取消ViewPager的预加载
+###问题6: 取消ViewPager的预加载
 
 ViewPager的预加载是因为默认设置了 mViewPager.setOffscreenPageLimit(1) 提前加载数据和界面.这个设置对于大部分的应用体验都是很好的,但是有时候不想提前加载数据.
 
@@ -133,7 +133,7 @@ protected boolean onActivityCreatedFlag = false;
     }
 ```
 
-###问题6: 当有多个碎片时,非碎片间的切换非常卡
+###问题7: 当有多个碎片时,非碎片间的切换非常卡
 
 问题分析:以bilibili为例,假设从"直播"碎片切换到"发现"碎片的时候卡顿(实际体验并不卡,好吧我做的应用卡),是因为
 
@@ -150,7 +150,7 @@ protected boolean onActivityCreatedFlag = false;
 
     可以根据需要,设置setOffscreenPageLimit()的参数大小来保留碎片,保证其不会被销毁,但会增加应用占用的内存,所以要合理的使用setOffscreenPageLimit()
 
-###问题7: 有非常多碎片,或碎片布局非常复杂时,首次渲染非常慢
+###问题8: 有非常多碎片,或碎片布局非常复杂时,首次渲染非常慢
 
 原因分析:博主做应用的时候就遇到过,一个Activity加载了十多个碎片,偏偏每个碎片不是简单ListView类型的可复用型布局,
 光第一个碎片的控件就高达几百个,除了应用设计本身的问题,程序也可以做相应的优化.
