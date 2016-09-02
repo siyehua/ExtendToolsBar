@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DataLazyScrollViewFragment">
+    tools:context=".LazyScrollViewFragment">
 
     <TextView
         android:id="@+id/tv_content"
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tv_content"
         android:scaleType="fitXY"
-        android:src="@drawable/_001"/>
+        android:src="@drawable/_007"/>
 
     <ImageView
         android:id="@+id/_002"
@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/_001"
         android:scaleType="fitXY"
-        android:src="@drawable/_002"/>
+        android:src="@drawable/_008"/>
 
     <ImageView
         android:id="@+id/_003"
@@ -36,5 +36,5 @@
         android:layout_height="match_parent"
         android:layout_below="@id/_002"
         android:scaleType="fitXY"
-        android:src="@drawable/_003"/>
+        android:src="@drawable/_009"/>
 </RelativeLayout>

@@ -90,9 +90,9 @@ ViewPager的碎片支持RecycleView,NestedScrollView,以及任何实现了Nested
 
 ###问题5: 初始化的数据莫名其妙不显示,或类似的问题
 
-原因分析:大部分的人写findView与设置是适配器,或者设置初始值时,都直接在onCreateView中完成.
+原因分析:大部分的人写findView与设置适配器,或者设置初始值时,都直接在onCreateView中完成.
 
-onCreateView是为了创建界面用的,为了设置布局,初始化最好是在onActivityCreated中完成,才能保证不至与莫名其妙丢失数据等问题.
+解决方案:onCreateView是为了创建界面用的,为了设置布局,初始化最好是在onActivityCreated中完成,才能保证不至于莫名其妙丢失数据等问题.
 
 
 ###问题5: 取消ViewPager的预加载
@@ -103,8 +103,8 @@ ViewPager的预加载是因为默认设置了 mViewPager.setOffscreenPageLimit(1
 
 解决方案:用户可见Fragment时,会调用setUserVisibleHint方法并传入真值.此时加载数据即可.
 
-需要注意的是,setUserVisibleHint方法与Fragment的生命周期方法并不绑定,也就是说它有可能会在findViewById之前就调用了.
-此时的view还没有赋值成功,极有可能直接空指针异常.所以需要加一个标志位判断是否已经初始化完成了View.
+####需要注意的是,setUserVisibleHint方法与Fragment的生命周期方法并不绑定,也就是说它有可能会在findViewById之前就调用了.
+####此时的view还没有赋值成功,极有可能直接空指针异常.所以需要加一个标志位判断是否已经初始化完成了View.
 
 ```java
 protected boolean onActivityCreatedFlag = false;
@@ -132,9 +132,10 @@ protected boolean onActivityCreatedFlag = false;
 
 ###问题6: 当有多个碎片时,非碎片间的切换非常卡
 
-问题分析:以bilibili为例,假设从"直播"碎片切换到"发现"碎片的时候卡顿(实际体验并不卡),是因为
+问题分析:以bilibili为例,假设从"直播"碎片切换到"发现"碎片的时候卡顿(实际体验并不卡,好吧就我做的应用卡),是因为
 
-* 碎片设计过于复杂,可去掉默认动画.从 直播 到 发现 界面,默认动画会依次划过这两个碎片中间所有碎片的布局,大量的初始化造成卡顿
+* 碎片设计过于复杂,可去掉默认动画.从 直播 到 发现 界面,默认动画会依次滑过这两个碎片中间所有碎片的布局,大量的初始化造成卡顿.
+设置下面方法,设置一个简单动画避免该问题
 
 ```java
  viewPager.setPageTransformer();
@@ -160,7 +161,9 @@ protected boolean onActivityCreatedFlag = false;
      
      微信就是采用了懒加载布局的方式实现的,设置了懒加载,哪怕viewpager初始化时设置了setOffscreenPageLimit(10),也不会卡顿
  
-下面是关键代码([详细代码](/app/src/main/java/com/siyehua/extendtoolsbar/BaseFragment.java))
+下面是关键代码(点击查看[详细代码](/app/src/main/java/com/siyehua/extendtoolsbar/BaseFragment.java))
+(LazyScrollViewFragment)(/app/src/main/java/com/siyehua/extendtoolsbar/LazyScrollViewFragment.java)
+就是采用懒加载的方式,大大提高了应用初始化的速度.
 
 ```java
   /**
