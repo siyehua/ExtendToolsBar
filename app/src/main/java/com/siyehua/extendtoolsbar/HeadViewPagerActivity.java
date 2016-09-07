@@ -12,9 +12,9 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 /**
- * 数据懒加载
+ * Head + ViewPager
  */
-public class MainActivity extends AppCompatActivity {
+public class HeadViewPagerActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     /**
      * head current off y
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_head_viewpager);
 
         //设置标题栏为空字符串,用自定义标题栏替换
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id

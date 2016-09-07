@@ -1,5 +1,6 @@
 package com.siyehua.extendtoolsbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
@@ -49,8 +50,9 @@ public class LazyScrollViewFragment extends BaseFragment {
         mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTextView.setVisibility(mTextView.getVisibility() == View.GONE ? View.VISIBLE :
-                        View.GONE);
+//                mTextView.setVisibility(mTextView.getVisibility() == View.GONE ? View.VISIBLE :
+//                        View.GONE);
+                startActivity(new Intent(getActivity(), ScrollViewActivity.class));
             }
         });
     }

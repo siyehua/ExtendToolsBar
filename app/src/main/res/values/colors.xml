@@ -4,4 +4,7 @@
     <color name="colorPrimary">#fb7299</color>
     <color name="colorPrimaryDark">#fb7299</color>
     <color name="colorAccent">#fb7299</color>
+    <color name="colorPrimary2">#FFFFFF</color>
+    <color name="colorPrimaryDark2">#fb7299</color>
+    <color name="colorAccent2">#FFFFFF</color>
 </resources>
