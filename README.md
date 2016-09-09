@@ -1,19 +1,9 @@
 # ExtendToolsBar
-Head + ViewPager 联动滑动框架
+现在有很多应用的设计,都有 头部 + ViewPager 这样的滑动框架,例如bilibili的首页,视频播放详情页,美团团购详情页,应用宝的应用详情,以及一些应用的个人中心等等.
 
-##项目主要搭建了联动滑动框架,以及解答使用框架遇到的问题
-###该框架应用于博主开发的几个商用项目中,目前表现良好.所以就把它开源出来,其实原理相对简单.后面有讲解遇到开发过程中的一些问题.
+这类框架关键是需要处理父View与子View之间的手势分发问题.
 
-现在有很多应用的设计,都有 头部 + ViewPager 这样的滑动框架,例如bilibili的首页,应用宝的应用详情,以及一些应用的个人中心等等.
-
-![bilibili](/img/bilibili_new.png)
-
-##图为bilibili的首页
-
-###[类似框架](https://github.com/cpoopc/ScrollableLayout)
-
-##原理
-该框架的难点在于 子View与父View之间的滑动交互,而Google的design support包中NestedScrolling则提供了这样的交互.
+Google的design support包中NestedScrolling则提供了这样的交互.
 
 典型的实现就是CoordinatorLayout,本框架就是基于CoordinatorLayout搭建的.
 
@@ -21,9 +11,15 @@ ViewPager碎片的根布局支持RecycleView,NestedScrollView,以及任何实现
 
 关于NestedScrolling相关资料请[点击](http://www.open-open.com/lib/view/open1440332151780.html)
 
-##效果图
-![效果图](/img/xiaoguo.gif)
+##效果
+Head+ViewPager联动滑动|美团团购详情浮动效果
+---|---
+仿bilibili首页|仿美团团购详情
+![效果图](/img/xiaoguo.gif)|![效果图](/img/mt_xiaoguo.gif)
+[类似框架](https://github.com/cpoopc/ScrollableLayout)|[类似框架](http://blog.csdn.net/xiaanming/article/details/17761431)
 
+
+###该框架应用于博主开发的几个商用项目中,目前表现良好.所以就把它开源出来,其实原理相对简单.后面有讲解遇到开发过程中的一些问题.
 
 ##框架在项目中遇到的问题
 ###问题1: ActionBar左边有一点点间距
@@ -213,9 +209,114 @@ protected boolean onActivityCreatedFlag = false;
     }
 ```
      
-     
-     
+###问题9: 美团团购详情中,悬浮View的距离顶部间距计算
 
+界面:
+
+![效果图](/img/mt_eg.jpg)
+
+
+布局:
+
+```xml
+<CoordinatorLayout>
+
+    <Head>
+        <Title/>
+        <波派克布局>
+    <Head>
+
+    <NestedScrollView>
+        <团购各种说明/>
+    </NestedScrollView
+
+    <悬浮View/>
+</CoordinatorLayout>
+```
+
+title 对应图中的 title
+
+博派克布局 对应图中的 可口可乐图片
+
+团购各种说明 对应图中的 新用户,随时退,评分等信息
+
+悬浮View 对应图中的 11.9,1元任抢布局.
+
+
+悬浮View设置两个属性则会悬浮在 博派克布局 上
+```xml
+    app:layout_anchor="@id/vp_main"
+    app:layout_anchorGravity="top"
+```
+第一个属性是在哪个控件范围内悬浮,第二个是在悬浮方式.
+
+悬浮View的悬浮方式设置为Top,会自动突出自身一半的高度.
+
+![效果图](/img/mt_001.jpg)
+
+图中红框部分是 团购各种说明,此时突出的悬浮则会遮挡住 可口可乐布局.
+
+此时可以把 悬浮View的高度 * 2 ,并设置顶部边距,这样就不会遮挡了
+
+```xml
+<ImageView
+        android:id="@+id/_abc"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:paddingTop="50dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/mt_suspension"
+        app:layout_anchor="@id/vp_main"
+        app:layout_anchorGravity="top"
+        />
+```
+
+![效果图](/img/mt_002.jpg)
+
+图中紫色框是悬浮View的真实高度
+
+到这里一般就已经设置好了,如果顶部完全收缩
+
+![效果图](/img/mt_003.jpg)
+
+看图,假设Title的高度大于悬浮View的高度,则悬浮view会有部分被遮挡.如果小于,则悬浮view具体顶部会有一定的间距
+
+正确的布局是,悬浮View的paddingTop始终于要与Title高度相等,再根据 可口可乐 被遮挡的,或相差距离,设置 <团购各种说明/> 的marginTop.
+
+
+```xml
+<android.support.v4.widget.NestedScrollView
+        android:id="@+id/vp_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="2.5dp"
+        //因为悬浮view高度为105dp,突出的高度为一半:52.5dp,悬浮view的paddingTop只有50dp,则可口可乐会有
+        52.5- 50 = 2.5 dp的高度会被遮挡,所以此时要设置距离 可口可乐布局 为 2.5dp
+
+
+        android:paddingTop="52.5dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ImageView
+            android:id="@+id/_123"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/mt_info"/>
+    </android.support.v4.widget.NestedScrollView>
+
+    <ImageView
+        android:id="@+id/_abc"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:paddingTop="50dp"//始终等于Title的高度
+        android:scaleType="fitXY"
+        android:src="@drawable/mt_suspension"
+        app:layout_anchor="@id/vp_main"
+        app:layout_anchorGravity="top"
+        />
+```
 #License
 ```
 Copyright 2016 siyehua
