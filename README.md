@@ -223,7 +223,7 @@ protected boolean onActivityCreatedFlag = false;
 
     <Head>
         <Title/>
-        <波派克布局>
+        <可口可乐布局>
     <Head>
 
     <NestedScrollView>
@@ -236,14 +236,14 @@ protected boolean onActivityCreatedFlag = false;
 
 title 对应图中的 title
 
-博派克布局 对应图中的 可口可乐图片
+可口可乐布局 对应图中的 可口可乐图片
 
 团购各种说明 对应图中的 新用户,随时退,评分等信息
 
 悬浮View 对应图中的 11.9,1元任抢布局.
 
 
-悬浮View设置两个属性则会悬浮在 博派克布局 上
+悬浮View设置两个属性则会悬浮在 团购说明布局 上
 ```xml
     app:layout_anchor="@id/vp_main"
     app:layout_anchorGravity="top"
@@ -291,8 +291,8 @@ title 对应图中的 title
         android:layout_height="match_parent"
 
         android:layout_marginTop="2.5dp"
-        //因为悬浮view高度为105dp,突出的高度为一半:52.5dp,悬浮view的paddingTop只有50dp,则可口可乐会有
-        52.5- 50 = 2.5 dp的高度会被遮挡,所以此时要设置距离 可口可乐布局 为 2.5dp
+        //因为悬浮view高度为105dp,突出的高度为一半:52.5dp,悬浮view的paddingTop只有50dp,则可口可乐布局会有
+        52.5 - 50 = 2.5 dp的高度会被遮挡,所以此时要设置距离 可口可乐布局 为 2.5dp
 
 
         android:paddingTop="52.5dp"
